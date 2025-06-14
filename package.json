@@ -41,6 +41,8 @@
   "scripts": {
     "watch": "node-sass sass/ -o ./ --source-map true --output-style expanded --indent-type tab --indent-width 1 -w",
     "compile:css": "node-sass sass/ -o ./ && stylelint '*.css' --fix || true && stylelint '*.css' --fix",
+    "build:tailwind": "tailwindcss -i ./assets/css/src/main.css -o ./assets/css/dist/tailwind.css",
+    "watch:tailwind": "tailwindcss -i ./assets/css/src/main.css -o ./assets/css/dist/tailwind.css --watch",
     "compile:rtl": "rtlcss style.css style-rtl.css",
     "build:css": "tailwindcss -i src/tailwind.css -o style.css --minify",
     "lint:scss": "wp-scripts lint-style 'sass/**/*.scss'",
