@@ -9,18 +9,18 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'mb-8 p-4 sm:p-6 bg-white shadow-md rounded-lg' ); ?>>
+	<header class="entry-header mb-4">
 		<?php
 		if ( is_singular() ) :
-			the_title( '<h1 class="entry-title">', '</h1>' );
+			the_title( '<h1 class="entry-title text-3xl font-bold text-dark hover:text-primary transition-colors duration-200">', '</h1>' );
 		else :
-			the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
+			the_title( '<h2 class="entry-title text-2xl font-semibold text-dark hover:text-primary transition-colors duration-200"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
 		endif;
 
 		if ( 'post' === get_post_type() ) :
 			?>
-			<div class="entry-meta">
+			<div class="entry-meta text-sm text-neutral mt-2">
 				<?php
 				st162_assistant_theme_posted_on();
 				st162_assistant_theme_posted_by();
@@ -31,7 +31,7 @@
 
 	<?php st162_assistant_theme_post_thumbnail(); ?>
 
-	<div class="entry-content">
+	<div class="entry-content text-neutral leading-relaxed">
 		<?php
 		the_content(
 			sprintf(
@@ -50,14 +50,14 @@
 
 		wp_link_pages(
 			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'st162-assistant-theme' ),
+				'before' => '<div class="page-links mt-4 text-sm text-neutral">' . esc_html__( 'Pages:', 'st162-assistant-theme' ),
 				'after'  => '</div>',
 			)
 		);
 		?>
 	</div><!-- .entry-content -->
 
-	<footer class="entry-footer">
+	<footer class="entry-footer mt-4 text-sm text-neutral">
 		<?php st162_assistant_theme_entry_footer(); ?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->

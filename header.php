@@ -25,28 +25,28 @@
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'st162-assistant-theme' ); ?></a>
 
-	<header id="masthead" class="site-header">
+	<header id="masthead" class="site-header bg-primary text-white p-2 sm:p-4 md:flex md:items-center md:justify-between">
 		<div class="site-branding">
 			<?php
 			the_custom_logo();
 			if ( is_front_page() && is_home() ) :
 				?>
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+				<h1 class="site-title text-2xl font-semibold"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 				<?php
 			else :
 				?>
-				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
+				<p class="site-title text-2xl font-semibold"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
 				<?php
 			endif;
 			$st162_assistant_theme_description = get_bloginfo( 'description', 'display' );
 			if ( $st162_assistant_theme_description || is_customize_preview() ) :
 				?>
-				<p class="site-description"><?php echo $st162_assistant_theme_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+				<p class="site-description text-sm text-light"><?php echo $st162_assistant_theme_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 			<?php endif; ?>
 		</div><!-- .site-branding -->
 
-		<nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'st162-assistant-theme' ); ?></button>
+		<nav id="site-navigation" class="main-navigation md:block">
+			<button class="menu-toggle md:hidden" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'st162-assistant-theme' ); ?></button>
 			<?php
 			wp_nav_menu(
 				array(
