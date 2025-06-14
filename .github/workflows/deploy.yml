@@ -1,0 +1,69 @@
+# .github/workflows/deploy.yml
+
+name: Build and Deploy (PHP & JS)
+
+# Se ejecuta en cada push a la rama 'main'
+on:
+  push:
+    branches:
+      - main
+
+# Lista de trabajos a ejecutar
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del código
+      # Descarga el código de tu repositorio
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Setup PHP y Composer
+      # Configura el entorno de PHP
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' # <-- Cambia esto a la versión de PHP de tu proyecto
+          extensions: mbstring, xml, ctype, json, tokenizer
+          tools: composer
+
+      # 3. Instalar dependencias de Composer
+      # Instala las dependencias de producción y optimiza el autoloader
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      # 4. Setup Node.js
+      # Configura el entorno de Node.js para compilar los assets
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Versión LTS recomendada de Node.js
+          cache: 'npm' # Habilita el caché para 'npm' para acelerar instalaciones futuras
+
+      # 5. Instalar dependencias de NPM
+      # Instala las 'devDependencies' como tailwindcss, postcss, etc.
+      - name: Install NPM dependencies
+        run: npm install
+
+      # 6. Compilar Assets para Producción
+      # Ejecuta los scripts de tu package.json para generar los archivos CSS finales
+      - name: Build CSS assets
+        run: |
+          npm run build:css
+          npm run compile:rtl
+
+      # 7. Desplegar con rsync
+      # Sincroniza todo al servidor: código, vendor/ y los nuevos assets CSS
+      - name: Deploy with rsync
+        uses: easingthemes/ssh-deploy@v5.1.0
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          SOURCE: "./"
+          TARGET: ${{ secrets.REMOTE_PATH }}
+          ARGS: "--recursive --delete"
+          # Asegúrate de excluir las carpetas que no quieres en el servidor
+          EXCLUDE: "/.git/, /node_modules/, /.github/, /sass/, /src/"
