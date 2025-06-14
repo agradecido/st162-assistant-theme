@@ -9,20 +9,20 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
-		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'mb-8 p-4 sm:p-6 bg-white shadow-md rounded-lg' ); ?>>
+	<header class="entry-header mb-4">
+		<?php the_title( '<h1 class="entry-title text-3xl font-bold text-dark">', '</h1>' ); ?>
 	</header><!-- .entry-header -->
 
 	<?php st162_assistant_theme_post_thumbnail(); ?>
 
-	<div class="entry-content">
+	<div class="entry-content text-neutral leading-relaxed">
 		<?php
 		the_content();
 
 		wp_link_pages(
 			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'st162-assistant-theme' ),
+				'before' => '<div class="page-links mt-4 text-sm text-neutral">' . esc_html__( 'Pages:', 'st162-assistant-theme' ),
 				'after'  => '</div>',
 			)
 		);
@@ -30,7 +30,7 @@
 	</div><!-- .entry-content -->
 
 	<?php if ( get_edit_post_link() ) : ?>
-		<footer class="entry-footer">
+		<footer class="entry-footer mt-4 text-sm text-neutral">
 			<?php
 			edit_post_link(
 				sprintf(
@@ -45,7 +45,7 @@
 					),
 					wp_kses_post( get_the_title() )
 				),
-				'<span class="edit-link">',
+				'<span class="edit-link hover:text-primary transition-colors duration-200">',
 				'</span>'
 			);
 			?>

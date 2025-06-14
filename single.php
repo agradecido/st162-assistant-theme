@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
+	<main id="primary" class="site-main container mx-auto p-2 sm:p-4">
 
 		<?php
 		while ( have_posts() ) :
@@ -20,8 +20,8 @@ get_header();
 
 			the_post_navigation(
 				array(
-					'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'st162-assistant-theme' ) . '</span> <span class="nav-title">%title</span>',
-					'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'st162-assistant-theme' ) . '</span> <span class="nav-title">%title</span>',
+					'prev_text' => '<span class="nav-subtitle text-neutral">' . esc_html__( 'Previous:', 'st162-assistant-theme' ) . '</span> <span class="nav-title font-semibold text-primary">%title</span>',
+					'next_text' => '<span class="nav-subtitle text-neutral">' . esc_html__( 'Next:', 'st162-assistant-theme' ) . '</span> <span class="nav-title font-semibold text-primary">%title</span>',
 				)
 			);
 
