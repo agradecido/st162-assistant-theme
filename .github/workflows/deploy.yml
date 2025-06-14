@@ -25,7 +25,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2' # <-- Cambia esto a la versión de PHP de tu proyecto
+          php-version: '8.1'
           extensions: mbstring, xml, ctype, json, tokenizer
           tools: composer
 
