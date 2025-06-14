@@ -5,7 +5,13 @@ module.exports = {
     './inc/**/*.php'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#4f46e5',
+        secondary: '#06b6d4',
+        accent: '#f59e0b',
+      },
+    },
   },
   plugins: [],
 };

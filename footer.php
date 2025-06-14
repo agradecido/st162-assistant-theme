@@ -11,8 +11,8 @@
 
 ?>
 
-	<footer id="colophon" class="site-footer">
-		<div class="site-info">
+       <footer id="colophon" class="site-footer bg-gray-800 text-white mt-auto">
+               <div class="site-info text-center p-4">
 				<?php
 				printf( esc_html__( 'Proudly powered by %s', 'st162-assistant-theme' ), 'WP API Assistant' );
 				?>

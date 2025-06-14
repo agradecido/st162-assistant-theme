@@ -20,13 +20,14 @@
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class( 'bg-gray-50 text-gray-900' ); ?>>
 <?php wp_body_open(); ?>
-<div id="page" class="site">
+<div id="page" class="site min-h-screen flex flex-col">
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'st162-assistant-theme' ); ?></a>
 
-	<header id="masthead" class="site-header">
-		<div class="site-branding">
+       <header id="masthead" class="site-header bg-gradient-to-r from-primary via-secondary to-accent text-white">
+               <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between p-4">
+               <div class="site-branding mb-4 md:mb-0 text-center md:text-left">
 			<?php
 			the_custom_logo();
 			if ( is_front_page() && is_home() ) :
@@ -55,5 +56,6 @@
 				)
 			);
 			?>
-		</nav><!-- #site-navigation -->
-	</header><!-- #masthead -->
+               </nav><!-- #site-navigation -->
+               </div>
+       </header><!-- #masthead -->
