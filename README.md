@@ -54,7 +54,7 @@ $ npm run build:css
 
 ### Available CLI commands
 
-`_s` comes packed with CLI commands tailored for WordPress theme development :
+`_s` comes packed with CLI commands tailored for WordPress theme development and we have added a few more to make your life easier, like TailwindCSS. You can run these commands from the root of your theme directory using Composer or npm.
 
 - `composer lint:wpcs` : checks all PHP files against [PHP Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/).
 - `composer lint:php` : checks all PHP files for syntax errors.
@@ -67,6 +67,3 @@ $ npm run build:css
 - `npm run lint:js` : checks all JavaScript files against [JavaScript Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/javascript/).
 - `npm run bundle` : generates a .zip archive for distribution, excluding development and system files.
 
-Now you're ready to go! The next step is easy to say, but harder to do: make an awesome WordPress theme. :)
-
-Good luck!
