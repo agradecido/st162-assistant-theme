@@ -4,8 +4,8 @@ name: Build and Deploy (PHP & JS)
 
 # Se ejecuta en cada push a la rama 'main'
 on:
-  push:
-    branches:
+  pull_request:
+      branches:
       - main
 
 # Lista de trabajos a ejecutar
