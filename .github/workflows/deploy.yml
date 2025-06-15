@@ -52,7 +52,6 @@ jobs:
       - name: Build CSS assets
         run: |
           npm run build:css
-          npm run compile:rtl
 
       # 7. Desplegar con rsync
       # Sincroniza todo al servidor: código, vendor/ y los nuevos assets CSS
