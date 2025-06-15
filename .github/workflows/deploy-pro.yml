@@ -1,6 +1,6 @@
 # .github/workflows/deploy.yml
 
-name: Build and Deploy (PHP & JS)
+name: Deploy to Production (PHP & JS)
 
 # Se ejecuta en cada push a la rama 'main'
 on:
@@ -53,6 +53,15 @@ jobs:
       - name: Build CSS assets
         run: |
           npm run build:css
+
+      # Create remote directory if it doesn't exist
+      - name: Create remote directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_PRO }}
+          username: ${{ secrets.SSH_USER_PRO }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_PRO }}
+          script: mkdir -p ${{ secrets.REMOTE_PATH_PRO }}
 
       # 7. Desplegar con rsync
       # Sincroniza todo al servidor: código, vendor/ y los nuevos assets CSS
