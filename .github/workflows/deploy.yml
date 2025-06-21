@@ -6,7 +6,7 @@ name: Deploy to Staging (PHP & JS)
 on:
   push:
     branches:
-      - main
+      - develop
 
 # Lista de trabajos a ejecutar
 jobs:
