@@ -144,6 +144,9 @@ function st162_assistant_theme_scripts() {
 
 	wp_enqueue_script( 'st162-assistant-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 
+	// Theme switcher script
+	wp_enqueue_script( 'st162-assistant-theme-selector', get_template_directory_uri() . '/js/theme-selector.js', array(), _S_VERSION, true );
+
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}

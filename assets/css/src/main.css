@@ -1,3 +1,124 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  /* Theme Base Styles - applied to body or a main wrapper */
+  .theme-classic {
+    /* General styles for classic theme if needed beyond header/footer */
+  }
+  .theme-modern {
+    /* General styles for modern theme if needed beyond header/footer */
+  }
+  .theme-dark {
+    /* General styles for dark theme if needed beyond header/footer */
+  }
+  .theme-colorful {
+    /* General styles for colorful theme if needed beyond header/footer */
+  }
+
+  /* Header Styles */
+  .theme-classic-header {
+    @apply bg-gray-100 text-gray-800 border-b border-gray-300;
+  }
+  .theme-classic-header .site-title a {
+    @apply text-gray-900;
+  }
+  .theme-classic-header .site-description {
+    @apply text-gray-600;
+  }
+  .theme-classic-header .main-navigation a {
+    @apply text-gray-700 hover:text-primary;
+  }
+  .theme-classic-header .menu-toggle {
+    @apply text-gray-700;
+  }
+
+  .theme-modern-header {
+    @apply bg-white text-gray-800 shadow-md; /* Changed text-neutral-800 to text-gray-800 */
+  }
+  .theme-modern-header .site-title a {
+    @apply text-primary font-bold tracking-tight;
+  }
+  .theme-modern-header .site-description {
+    @apply text-gray-500 text-sm; /* Changed text-neutral-500 to text-gray-500 */
+  }
+  .theme-modern-header .main-navigation a {
+    @apply text-gray-600 hover:text-primary font-semibold; /* Changed text-neutral-600 to text-gray-600 */
+  }
+   .theme-modern-header .menu-toggle {
+    @apply text-gray-700; /* Changed text-neutral-700 to text-gray-700 */
+  }
+
+  .theme-dark-header {
+    @apply bg-gray-900 text-light shadow-lg;
+  }
+  .theme-dark-header .site-title a {
+    @apply text-white;
+  }
+  .theme-dark-header .site-description {
+    @apply text-gray-400;
+  }
+  .theme-dark-header .main-navigation a {
+    @apply text-gray-300 hover:text-secondary;
+  }
+  .theme-dark-header .menu-toggle {
+    @apply text-gray-300;
+  }
+
+  .theme-colorful-header {
+    @apply bg-gradient-to-r from-purple-500 to-pink-500 text-white;
+  }
+  .theme-colorful-header .site-title a {
+    @apply text-white font-bold;
+  }
+  .theme-colorful-header .site-description {
+    @apply text-purple-200;
+  }
+  .theme-colorful-header .main-navigation a {
+    @apply text-white hover:text-yellow-300;
+  }
+  .theme-colorful-header .menu-toggle {
+    @apply text-white;
+  }
+
+  /* Footer Styles */
+  .theme-classic-footer {
+    @apply bg-gray-200 text-gray-700 border-t border-gray-300;
+  }
+  .theme-classic-footer a {
+    @apply text-primary hover:underline;
+  }
+
+  .theme-modern-footer {
+    @apply bg-gray-100 text-gray-600 text-sm; /* Changed bg-neutral-100 to bg-gray-100 and text-neutral-600 to text-gray-600 */
+  }
+  .theme-modern-footer a {
+    @apply text-primary hover:text-secondary;
+  }
+
+  .theme-dark-footer {
+    @apply bg-gray-800 text-gray-400;
+  }
+  .theme-dark-footer a {
+    @apply text-secondary hover:text-light;
+  }
+
+  .theme-colorful-footer {
+    @apply bg-gradient-to-r from-pink-500 to-purple-500 text-white;
+  }
+  .theme-colorful-footer a {
+    @apply text-yellow-300 hover:underline;
+  }
+}
+
+/* Theme Switcher Styles */
+#theme-switcher-controls {
+  @apply fixed top-5 right-5 bg-white p-2.5 border border-gray-300 z-[10000] flex gap-2.5 rounded shadow-lg;
+}
+#theme-switcher-controls button {
+  @apply p-1.5 px-2.5 cursor-pointer border border-gray-300 bg-gray-50 text-gray-700 rounded hover:bg-gray-200;
+}
+#theme-switcher-controls button.active-theme {
+  @apply font-bold bg-primary text-white hover:bg-primary;
+}
