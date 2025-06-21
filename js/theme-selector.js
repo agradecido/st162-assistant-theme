@@ -4,24 +4,35 @@
 
   function applyTheme(theme) {
     // Remove existing theme classes from header and footer
+    const body = document.body;
     const header = document.getElementById('masthead');
     const footer = document.getElementById('colophon');
 
-    if (header) {
-      THEMES.forEach(t => {
+    // Remove existing theme classes from body, header, and footer
+    THEMES.forEach(t => {
+      body.classList.remove(`theme-${t}`);
+      if (header) {
         header.classList.remove(`theme-${t}-header`);
-        // Remove default Tailwind classes that might conflict
-        header.classList.remove('bg-primary', 'text-white');
-      });
-      header.classList.add(`theme-${theme}-header`);
+      }
+      if (footer) {
+        footer.classList.remove(`theme-${t}-footer`);
+      }
+    });
+
+    // Remove default Tailwind classes from header and footer that might conflict
+    if (header) {
+      header.classList.remove('bg-primary', 'text-white');
+    }
+    if (footer) {
+      footer.classList.remove('bg-dark', 'text-light');
     }
 
+    // Add new theme classes
+    body.classList.add(`theme-${theme}`);
+    if (header) {
+      header.classList.add(`theme-${theme}-header`);
+    }
     if (footer) {
-      THEMES.forEach(t => {
-        footer.classList.remove(`theme-${t}-footer`);
-        // Remove default Tailwind classes that might conflict
-        footer.classList.remove('bg-dark', 'text-light');
-      });
       footer.classList.add(`theme-${theme}-footer`);
     }
 

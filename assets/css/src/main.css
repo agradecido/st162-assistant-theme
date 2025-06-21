@@ -2,123 +2,398 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  /* Theme Base Styles - applied to body or a main wrapper */
-  .theme-classic {
-    /* General styles for classic theme if needed beyond header/footer */
-  }
-  .theme-modern {
-    /* General styles for modern theme if needed beyond header/footer */
-  }
-  .theme-dark {
-    /* General styles for dark theme if needed beyond header/footer */
-  }
-  .theme-colorful {
-    /* General styles for colorful theme if needed beyond header/footer */
+/* --- Base Navigation Styles --- */
+.main-navigation { /* #site-navigation */
+  /* El botón .menu-toggle es md:hidden por lo que solo se muestra en < md */
+}
+
+#primary-menu { /* El UL principal del menú wp_nav_menu */
+  @apply hidden; /* Oculto por defecto (móvil primero), JS lo muestra con .toggled */
+}
+
+/* Cuando el menú móvil está activado (clase .toggled en #site-navigation por navigation.js) */
+.main-navigation.toggled #primary-menu {
+  @apply block w-full border-t; /* Ocupa el ancho, añade un borde superior. Color del borde/fondo por tema. */
+  /* Estilos adicionales para el contenedor del menú desplegable si es necesario (ej. position absolute) */
+}
+
+.main-navigation.toggled #primary-menu li a,
+.main-navigation.toggled #primary-menu li { /* Aplicar a li también para que el borde ocupe todo el ancho */
+  @apply block; /* Asegurar que el enlace o el li ocupe todo el ancho para el borde */
+}
+
+.main-navigation.toggled #primary-menu li a {
+  @apply p-4 border-b; /* Padding generoso, borde inferior para separar items. Colores por tema. */
+}
+
+/* Estilos para submenús en móvil (si se quieren diferentes a los de escritorio) */
+.main-navigation.toggled #primary-menu ul { /* Submenús en móvil */
+  @apply pl-4 pb-2; /* Indentación para los submenús y un poco de padding inferior */
+}
+.main-navigation.toggled #primary-menu ul a {
+  @apply py-3 text-sm; /* Padding ligeramente menor y texto más pequeño para sub-items */
+  /* El borde inferior ya lo hereda del selector de arriba, o se puede redefinir si es necesario */
+}
+.main-navigation.toggled #primary-menu ul li:last-child a {
+ @apply border-b-0; /* Quitar el último borde en submenús si se ve mejor */
+}
+
+
+/* Estilos de Navegación para Escritorio (md y superior) */
+@screen md {
+  /* El .menu-toggle está oculto en md y superior por la clase md:hidden en el HTML */
+
+  #primary-menu {
+    @apply flex flex-row items-center; /* Layout en fila, alineación vertical central */
+    /* gap-x-N se aplicará a los items de menú específicos del tema si es necesario */
   }
 
-  /* Header Styles */
+  /* Asegurar que si .toggled está presente en escritorio, no rompa el display flex */
+  .main-navigation.toggled #primary-menu {
+    @apply flex;
+  }
+
+  #primary-menu ul { /* Submenús desplegables */
+    @apply absolute hidden group-hover:block focus-within:block py-2 rounded-md shadow-lg;
+    /* El color de fondo del submenú se definirá por tema. Ejemplo: bg-white o bg-theme-header-dropdown */
+    min-width: 200px; /* Ancho mínimo para los desplegables */
+    z-index: 1000; /* Para estar por encima de otros contenidos */
+    /* Transiciones opcionales para aparecer/desaparecer pueden añadirse aquí o con JS */
+  }
+
+  #primary-menu > li {
+    @apply relative; /* Necesario para el posicionamiento absoluto de los submenús */
+  }
+
+  /* Estilos para los items del menú de nivel superior en escritorio */
+  /* El padding y colores específicos vendrán de las reglas de tema: .theme-*-header .main-navigation a */
+  /* Ejemplo de padding base si no lo define el tema: */
+  /* #primary-menu > li > a { @apply py-3 px-4; } */
+
+  /* Estilos para los items de submenú */
+  #primary-menu ul li a {
+    @apply block w-full px-4 py-2 text-sm whitespace-nowrap;
+    /* Los colores (texto, fondo en hover) vendrán de las reglas de tema */
+    /* Ejemplo: hover:bg-gray-100 */
+  }
+
+  /* Indicador para items con submenú (opcional) */
+  #primary-menu .menu-item-has-children > a::after,
+  #primary-menu .page_item_has_children > a::after {
+    content: '\\25BC'; /* Flecha hacia abajo ▼ */
+    @apply ml-1.5 text-xs;
+  }
+
+  #primary-menu ul .menu-item-has-children > a::after,
+  #primary-menu ul .page_item_has_children > a::after {
+    content: '\\25B6'; /* Flecha hacia la derecha ▶ */
+    @apply absolute right-3 top-1/2 -translate-y-1/2;
+  }
+}
+/* --- Fin de Base Navigation Styles --- */
+
+@layer components {
+  /* --- Theme: Classic (Renovated) --- */
+  .theme-classic {
+    @apply bg-stone-100 text-stone-800; /* Page background and base text */
+  }
+  .theme-classic a {
+    @apply text-blue-700 hover:text-blue-800;
+  }
   .theme-classic-header {
-    @apply bg-gray-100 text-gray-800 border-b border-gray-300;
+    @apply bg-stone-200 text-stone-900 border-b border-stone-300;
   }
   .theme-classic-header .site-title a {
-    @apply text-gray-900;
+    @apply text-stone-900 hover:text-blue-700;
   }
   .theme-classic-header .site-description {
-    @apply text-gray-600;
+    @apply text-stone-700;
   }
   .theme-classic-header .main-navigation a {
-    @apply text-gray-700 hover:text-primary;
+    /* Este selector base se mantiene para el color del menu-toggle si no se especifica abajo */
+    @apply text-stone-800 hover:text-blue-700;
   }
-  .theme-classic-header .menu-toggle {
-    @apply text-gray-700;
-  }
-
-  .theme-modern-header {
-    @apply bg-white text-gray-800 shadow-md; /* Changed text-neutral-800 to text-gray-800 */
-  }
-  .theme-modern-header .site-title a {
-    @apply text-primary font-bold tracking-tight;
-  }
-  .theme-modern-header .site-description {
-    @apply text-gray-500 text-sm; /* Changed text-neutral-500 to text-gray-500 */
-  }
-  .theme-modern-header .main-navigation a {
-    @apply text-gray-600 hover:text-primary font-semibold; /* Changed text-neutral-600 to text-gray-600 */
-  }
-   .theme-modern-header .menu-toggle {
-    @apply text-gray-700; /* Changed text-neutral-700 to text-gray-700 */
+  .theme-classic-header .menu-toggle { /* Específico para el botón hamburguesa */
+    @apply text-stone-800;
   }
 
-  .theme-dark-header {
-    @apply bg-gray-900 text-light shadow-lg;
-  }
-  .theme-dark-header .site-title a {
-    @apply text-white;
-  }
-  .theme-dark-header .site-description {
-    @apply text-gray-400;
-  }
-  .theme-dark-header .main-navigation a {
-    @apply text-gray-300 hover:text-secondary;
-  }
-  .theme-dark-header .menu-toggle {
-    @apply text-gray-300;
+  /* Estilos de Menú Escritorio para Tema Clásico */
+  @screen md {
+    .theme-classic-header .main-navigation #primary-menu > li > a {
+      @apply py-5 px-4 text-stone-700 hover:text-blue-700 transition-colors duration-150 ease-in-out;
+    }
+    .theme-classic-header .main-navigation #primary-menu > li.current-menu-item > a,
+    .theme-classic-header .main-navigation #primary-menu > li.current-menu-ancestor > a {
+      @apply text-blue-700 font-semibold relative;
+    }
+    /* Indicador visual para item activo en escritorio */
+    .theme-classic-header .main-navigation #primary-menu > li.current-menu-item > a::before,
+    .theme-classic-header .main-navigation #primary-menu > li.current-menu-ancestor > a::before {
+      content: '';
+      @apply absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-0.5 bg-blue-700;
+    }
+
+    .theme-classic-header .main-navigation #primary-menu ul { /* Submenú desplegable */
+      @apply bg-stone-50 border border-stone-300 shadow-md;
+    }
+    .theme-classic-header .main-navigation #primary-menu ul a {
+      @apply text-stone-700 hover:bg-stone-200 hover:text-blue-700 transition-colors duration-150 ease-in-out;
+    }
+    .theme-classic-header .main-navigation #primary-menu ul li.current-menu-item > a {
+      @apply bg-stone-200 text-blue-700;
+    }
   }
 
-  .theme-colorful-header {
-    @apply bg-gradient-to-r from-purple-500 to-pink-500 text-white;
+  /* Estilos de Menú Móvil para Tema Clásico */
+  .theme-classic-header .main-navigation.toggled #primary-menu {
+    @apply bg-stone-200 border-stone-300;
   }
-  .theme-colorful-header .site-title a {
-    @apply text-white font-bold;
+  .theme-classic-header .main-navigation.toggled #primary-menu li a { /* li a y no solo a para especificidad */
+    @apply text-stone-800 border-stone-300 hover:bg-stone-300 hover:text-blue-700 transition-colors duration-150 ease-in-out;
   }
-  .theme-colorful-header .site-description {
-    @apply text-purple-200;
+  .theme-classic-header .main-navigation.toggled #primary-menu li.current-menu-item > a {
+    @apply bg-stone-300 text-blue-700;
   }
-  .theme-colorful-header .main-navigation a {
-    @apply text-white hover:text-yellow-300;
+  .theme-classic-header .main-navigation.toggled #primary-menu ul {
+    @apply bg-stone-100;
   }
-  .theme-colorful-header .menu-toggle {
-    @apply text-white;
+  .theme-classic-header .main-navigation.toggled #primary-menu ul a {
+     @apply text-stone-700 border-stone-200 hover:bg-stone-300 transition-colors duration-150 ease-in-out;
   }
 
-  /* Footer Styles */
   .theme-classic-footer {
-    @apply bg-gray-200 text-gray-700 border-t border-gray-300;
+    @apply bg-stone-300 text-stone-800 border-t border-stone-400;
   }
   .theme-classic-footer a {
-    @apply text-primary hover:underline;
+    @apply text-blue-700 hover:text-blue-800;
+  }
+
+  /* --- Theme: Modern (Renovated) --- */
+  .theme-modern {
+    @apply bg-slate-50 text-slate-700; /* Page background and base text */
+  }
+  .theme-modern a {
+    @apply text-cyan-500 hover:text-cyan-600;
+  }
+  .theme-modern-header {
+    @apply bg-white text-slate-900 shadow-lg;
+  }
+  .theme-modern-header .site-title a {
+    @apply text-slate-900 hover:text-cyan-500 font-semibold;
+  }
+  .theme-modern-header .site-description {
+    @apply text-slate-500;
+  }
+  .theme-modern-header .main-navigation a {
+    /* Este selector base se mantiene para el color del menu-toggle si no se especifica abajo */
+    @apply text-slate-700 hover:text-cyan-500 font-medium;
+  }
+  .theme-modern-header .menu-toggle { /* Específico para el botón hamburguesa */
+    @apply text-slate-700;
+  }
+
+  /* Estilos de Menú Escritorio para Tema Moderno */
+  @screen md {
+    .theme-modern-header .main-navigation #primary-menu {
+      @apply gap-1; /* Espacio sutil entre items */
+    }
+    .theme-modern-header .main-navigation #primary-menu > li > a {
+      @apply py-5 px-3 text-slate-600 hover:text-cyan-500 rounded-md transition-colors duration-150;
+    }
+    .theme-modern-header .main-navigation #primary-menu > li.current-menu-item > a,
+    .theme-modern-header .main-navigation #primary-menu > li.current-menu-ancestor > a {
+      @apply text-cyan-500 bg-cyan-50 rounded-md;
+    }
+    .theme-modern-header .main-navigation #primary-menu ul { /* Submenú desplegable */
+      @apply bg-white border border-slate-200 shadow-xl;
+    }
+    .theme-modern-header .main-navigation #primary-menu ul a {
+      @apply text-slate-600 hover:bg-cyan-50 hover:text-cyan-600 transition-colors duration-150 ease-in-out;
+    }
+    .theme-modern-header .main-navigation #primary-menu ul li.current-menu-item > a {
+      @apply bg-cyan-50 text-cyan-600;
+    }
+  }
+
+  /* Estilos de Menú Móvil para Tema Moderno */
+  .theme-modern-header .main-navigation.toggled #primary-menu {
+    @apply bg-white border-slate-200 shadow-lg;
+  }
+  .theme-modern-header .main-navigation.toggled #primary-menu li a {
+    @apply text-slate-700 border-slate-200 hover:bg-slate-100 hover:text-cyan-600 transition-colors duration-150 ease-in-out;
+  }
+  .theme-modern-header .main-navigation.toggled #primary-menu li.current-menu-item > a {
+    @apply bg-slate-100 text-cyan-600;
+  }
+  .theme-modern-header .main-navigation.toggled #primary-menu ul {
+    @apply bg-slate-50;
+  }
+  .theme-modern-header .main-navigation.toggled #primary-menu ul a {
+     @apply text-slate-600 border-slate-100 hover:bg-slate-200 transition-colors duration-150 ease-in-out;
   }
 
   .theme-modern-footer {
-    @apply bg-gray-100 text-gray-600 text-sm; /* Changed bg-neutral-100 to bg-gray-100 and text-neutral-600 to text-gray-600 */
+    @apply bg-slate-800 text-slate-200;
   }
   .theme-modern-footer a {
-    @apply text-primary hover:text-secondary;
+    @apply text-cyan-400 hover:text-cyan-300;
+  }
+
+  /* --- Theme: Dark (Renovated) --- */
+  .theme-dark {
+    @apply bg-zinc-900 text-zinc-300; /* Page background and base text */
+  }
+  .theme-dark a {
+    @apply text-lime-400 hover:text-lime-300;
+  }
+  .theme-dark-header {
+    @apply bg-black text-zinc-100 shadow-xl;
+  }
+  .theme-dark-header .site-title a {
+    @apply text-zinc-100 hover:text-lime-400;
+  }
+  .theme-dark-header .site-description {
+    @apply text-zinc-400;
+  }
+  .theme-dark-header .main-navigation a {
+    /* Este selector base se mantiene para el color del menu-toggle si no se especifica abajo */
+    @apply text-zinc-200 hover:text-lime-400;
+  }
+  .theme-dark-header .menu-toggle { /* Específico para el botón hamburguesa */
+    @apply text-zinc-200;
+  }
+
+  /* Estilos de Menú Escritorio para Tema Oscuro */
+  @screen md {
+    .theme-dark-header .main-navigation #primary-menu > li > a {
+      @apply py-5 px-4 text-zinc-300 hover:text-lime-400 border-2 border-transparent hover:border-lime-500 rounded-lg transition-colors duration-150 ease-in-out;
+    }
+    .theme-dark-header .main-navigation #primary-menu > li.current-menu-item > a,
+    .theme-dark-header .main-navigation #primary-menu > li.current-menu-ancestor > a {
+      @apply text-lime-400 border-lime-500;
+    }
+     .theme-dark-header .main-navigation #primary-menu ul { /* Submenú desplegable */
+      @apply bg-zinc-900 border border-zinc-700 shadow-xl;
+    }
+    .theme-dark-header .main-navigation #primary-menu ul a {
+       @apply text-zinc-300 hover:bg-zinc-700 hover:text-lime-400 transition-colors duration-150 ease-in-out;
+    }
+    .theme-dark-header .main-navigation #primary-menu ul li.current-menu-item > a {
+      @apply bg-zinc-700 text-lime-400;
+    }
+  }
+
+  /* Estilos de Menú Móvil para Tema Oscuro */
+  .theme-dark-header .main-navigation.toggled #primary-menu {
+    @apply bg-zinc-900 border-zinc-700;
+  }
+  .theme-dark-header .main-navigation.toggled #primary-menu li a {
+       @apply text-zinc-300 hover:bg-zinc-700 hover:text-lime-400 transition-colors duration-150 ease-in-out;
+  }
+  .theme-dark-header .main-navigation.toggled #primary-menu li.current-menu-item > a {
+    @apply bg-zinc-800 text-lime-400;
+  }
+  .theme-dark-header .main-navigation.toggled #primary-menu ul {
+    @apply bg-zinc-800;
+  }
+  .theme-dark-header .main-navigation.toggled #primary-menu ul a {
+     @apply text-zinc-400 border-zinc-700 hover:bg-zinc-700 transition-colors duration-150 ease-in-out;
   }
 
   .theme-dark-footer {
-    @apply bg-gray-800 text-gray-400;
+    @apply bg-zinc-800 text-zinc-400;
   }
   .theme-dark-footer a {
-    @apply text-secondary hover:text-light;
+    @apply text-lime-500 hover:text-lime-400;
+  }
+
+  /* --- Theme: Colorful (Renovated) --- */
+  .theme-colorful {
+    @apply bg-orange-50 text-orange-900; /* Page background and base text */
+  }
+  .theme-colorful a {
+    @apply text-teal-600 hover:text-teal-700;
+  }
+  .theme-colorful-header {
+    @apply bg-gradient-to-r from-rose-400 to-orange-400 text-white;
+  }
+  .theme-colorful-header .site-title a {
+    @apply text-white hover:text-rose-100 font-bold;
+  }
+  .theme-colorful-header .site-description {
+    @apply text-rose-100;
+  }
+  .theme-colorful-header .main-navigation a {
+    /* Este selector base se mantiene para el color del menu-toggle si no se especifica abajo */
+    @apply text-white hover:text-yellow-300;
+  }
+  .theme-colorful-header .menu-toggle { /* Específico para el botón hamburguesa */
+    @apply text-white;
+  }
+
+  /* Estilos de Menú Escritorio para Tema Colorido */
+  @screen md {
+    .theme-colorful-header .main-navigation #primary-menu > li > a {
+      @apply py-5 px-4 text-white hover:text-yellow-300 font-medium tracking-wide transition-colors duration-150 ease-in-out;
+    }
+    .theme-colorful-header .main-navigation #primary-menu > li.current-menu-item > a,
+    .theme-colorful-header .main-navigation #primary-menu > li.current-menu-ancestor > a {
+      @apply text-yellow-300 relative;
+    }
+    /* Indicador visual para item activo en escritorio */
+    .theme-colorful-header .main-navigation #primary-menu > li.current-menu-item > a::before,
+    .theme-colorful-header .main-navigation #primary-menu > li.current-menu-ancestor > a::before {
+      content: '';
+      @apply absolute bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-yellow-300 rounded-full;
+    }
+
+    .theme-colorful-header .main-navigation #primary-menu ul { /* Submenú desplegable */
+      @apply bg-rose-500 border border-rose-600 shadow-lg;
+    }
+    .theme-colorful-header .main-navigation #primary-menu ul a {
+      @apply text-white hover:bg-rose-600 hover:text-yellow-200 transition-colors duration-150 ease-in-out;
+    }
+    .theme-colorful-header .main-navigation #primary-menu ul li.current-menu-item > a {
+      @apply bg-rose-600 text-yellow-200;
+    }
+  }
+
+  /* Estilos de Menú Móvil para Tema Colorido */
+  .theme-colorful-header .main-navigation.toggled #primary-menu {
+    /* Usar un color sólido del gradiente o uno complementario */
+    @apply bg-orange-500 border-orange-600;
+  }
+  .theme-colorful-header .main-navigation.toggled #primary-menu li a {
+    @apply text-white border-orange-600 hover:bg-orange-600 hover:text-yellow-300 transition-colors duration-150 ease-in-out;
+  }
+  .theme-colorful-header .main-navigation.toggled #primary-menu li.current-menu-item > a {
+    @apply bg-orange-600 text-yellow-300;
+  }
+  .theme-colorful-header .main-navigation.toggled #primary-menu ul {
+    @apply bg-orange-400;
+  }
+  .theme-colorful-header .main-navigation.toggled #primary-menu ul a {
+      @apply text-rose-100 border-orange-500 hover:bg-orange-500 transition-colors duration-150 ease-in-out; /* Corrected and added transition */
   }
 
   .theme-colorful-footer {
-    @apply bg-gradient-to-r from-pink-500 to-purple-500 text-white;
+    @apply bg-rose-500 text-white;
   }
   .theme-colorful-footer a {
-    @apply text-yellow-300 hover:underline;
+    @apply text-yellow-300 hover:text-yellow-200;
   }
 }
 
-/* Theme Switcher Styles */
+/* Theme Switcher Styles - Should remain largely unchanged but ensure it's visible on new themes */
 #theme-switcher-controls {
   @apply fixed top-5 right-5 bg-white p-2.5 border border-gray-300 z-[10000] flex gap-2.5 rounded shadow-lg;
+  /* Consider adding a subtle shadow or outline to ensure visibility if a theme uses a white top-right bg */
 }
 #theme-switcher-controls button {
   @apply p-1.5 px-2.5 cursor-pointer border border-gray-300 bg-gray-50 text-gray-700 rounded hover:bg-gray-200;
 }
 #theme-switcher-controls button.active-theme {
-  @apply font-bold bg-primary text-white hover:bg-primary;
+  /* Using existing primary color for active, which is blue. This might need adjustment if a theme's primary clashes. */
+  /* For now, let's keep it as is, or make it more generic e.g. a darker gray */
+  @apply font-bold bg-slate-700 text-white hover:bg-slate-600; /* Changed from bg-primary */
 }
