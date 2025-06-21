@@ -75,4 +75,4 @@ jobs:
           TARGET: ${{ secrets.REMOTE_PATH_PRO }}
           ARGS: "--recursive --delete"
           # Asegúrate de excluir las carpetas que no quieres en el servidor
-          EXCLUDE: "/.git/, /node_modules/, /.github/, /sass/, /src/"
+          EXCLUDE: "/.git/, /node_modules/, /.github/, /src/"

@@ -57,10 +57,10 @@ jobs:
       - name: Create remote directory
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST_PRO }}
-          username: ${{ secrets.SSH_USER_PRO }}
-          key: ${{ secrets.SSH_PRIVATE_KEY_PRO }}
-          script: mkdir -p ${{ secrets.REMOTE_PATH_PRO }}          
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: mkdir -p ${{ secrets.REMOTE_PATH }}          
 
       # 7. Desplegar con rsync
       # Sincroniza todo al servidor: código, vendor/ y los nuevos assets CSS
