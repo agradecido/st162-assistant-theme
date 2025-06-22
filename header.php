@@ -24,7 +24,7 @@
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'st162-assistant-theme' ); ?></a>
 
-	<header id="masthead" class="site-header bg-primary text-white p-2 sm:p-4 md:flex md:items-center md:justify-between">
+        <header id="masthead" class="site-header bg-primary text-white p-4 md:flex md:items-center md:justify-between shadow-lg">
 		<div class="site-branding">
 			<?php
 			the_custom_logo();
@@ -44,15 +44,21 @@
 			<?php endif; ?>
 		</div><!-- .site-branding -->
 
-		<nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle md:hidden" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'st162-assistant-theme' ); ?></button>
-			<?php
-			wp_nav_menu(
-				array(
-					'theme_location'  => 'menu-1',
-					'menu_id'         => 'primary-menu',
-				)
-			);
-			?>
-		</nav><!-- #site-navigation -->
+                <nav id="site-navigation" class="main-navigation">
+                        <button class="menu-toggle md:hidden text-white" aria-controls="primary-menu" aria-expanded="false">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                </svg>
+                                <span class="sr-only"><?php esc_html_e( 'Toggle navigation', 'st162-assistant-theme' ); ?></span>
+                        </button>
+                        <?php
+                        wp_nav_menu(
+                                array(
+                                        'theme_location'  => 'menu-1',
+                                        'menu_id'         => 'primary-menu',
+                                        'menu_class'      => 'nav-menu',
+                                )
+                        );
+                        ?>
+                </nav><!-- #site-navigation -->
 	</header><!-- #masthead -->
