@@ -179,3 +179,20 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+function st162_assistant_theme_comment_form_defaults( $defaults ) {
+    $defaults['class_form'] = 'flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 p-4 bg-light rounded-lg shadow-md';
+
+    // Customize the comment field
+    $defaults['comment_field'] = '<div class="comment-form-comment flex-grow w-full">' .
+        '<label for="comment" class="screen-reader-text">' . _x( 'Comment', 'noun', 'st162-assistant-theme' ) . '</label>' .
+        '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" class="w-full p-3 border border-neutral rounded-lg focus:ring-primary focus:border-primary transition-shadow duration-200" placeholder="' . esc_attr__( 'Ask a question...', 'st162-assistant-theme' ) . '"></textarea>' .
+        '</div>';
+
+    // Customize the submit button
+    $defaults['submit_button'] = '<button name="%1$s" type="submit" id="%2$s" class="%3$s w-full sm:w-auto px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-200">%4$s</button>';
+    $defaults['submit_field'] = '<div class="form-submit">%1$s %2$s</div>';
+
+    return $defaults;
+}
+add_filter( 'comment_form_defaults', 'st162_assistant_theme_comment_form_defaults' );

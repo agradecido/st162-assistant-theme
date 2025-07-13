@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  @media (max-width: 640px) {
+    .comment-form {
+      flex-direction: column;
+    }
+    .comment-form .comment-form-comment,
+    .comment-form .form-submit {
+      width: 100%;
+    }
+    .comment-form .form-submit {
+      margin-top: 1rem;
+    }
+  }
+}

@@ -17,6 +17,7 @@
 	<?php st162_assistant_theme_post_thumbnail(); ?>
 
 	<div class="entry-content text-neutral leading-relaxed">
+		<a href="#comments" class="text-primary hover:underline mb-4 inline-block"><?php esc_html_e( 'View Chat History', 'st162-assistant-theme' ); ?></a>
 		<?php
 		the_content();
 
