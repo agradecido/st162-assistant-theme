@@ -18,35 +18,20 @@
   },
   "devDependencies": {
     "@wordpress/scripts": "^19.2.2",
+    "autoprefixer": "^10.4.0",
+    "browser-sync": "^3.0.4",
     "dir-archiver": "^1.1.1",
-    "node-sass": "^7.0.1",
-    "rtlcss": "^3.5.0",
-    "tailwindcss": "^3.4.4",
+    "npm-run-all": "^4.1.5",
     "postcss-cli": "^10.1.0",
-    "autoprefixer": "^10.4.0"
-  },
-  "rtlcssConfig": {
-    "options": {
-      "autoRename": false,
-      "autoRenameStrict": false,
-      "blacklist": {},
-      "clean": true,
-      "greedy": false,
-      "processUrls": false,
-      "stringMap": []
-    },
-    "plugins": [],
-    "map": false
+    "tailwindcss": "^3.4.4"
   },
   "scripts": {
-    "watch": "node-sass sass/ -o ./ --source-map true --output-style expanded --indent-type tab --indent-width 1 -w",
-    "compile:css": "node-sass sass/ -o ./ && stylelint '*.css' --fix || true && stylelint '*.css' --fix",
-    "build:tailwind": "tailwindcss -i ./assets/css/src/main.css -o ./assets/css/dist/tailwind.css",
-    "watch:tailwind": "tailwindcss -i ./assets/css/src/main.css -o ./assets/css/dist/tailwind.css --watch",
-    "compile:rtl": "rtlcss style.css style-rtl.css",
-    "build:css": "tailwindcss -i src/tailwind.css -o style.css --minify",
-    "lint:scss": "wp-scripts lint-style 'sass/**/*.scss'",
+    "compile:css": "stylelint '*.css' --fix",
+    "build:css": "tailwindcss -i ./assets/css/src/main.css -o style.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/src/main.css -o style.css --minify --watch",
     "lint:js": "wp-scripts lint-js 'js/*.js'",
-    "bundle": "dir-archiver --src . --dest ../_s.zip --exclude .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore README.md composer.json composer.lock node_modules vendor package-lock.json package.json .travis.yml phpcs.xml.dist sass style.css.map yarn.lock"
+    "bundle": "dir-archiver --src . --dest ../st162-assistant-theme.zip --exclude .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore README.md composer.json composer.lock node_modules vendor package-lock.json package.json .travis.yml phpcs.xml.dist sass style.css.map yarn.lock",
+    "serve": "browser-sync start --proxy http://localhost:8000 --files \"**/*.php, style.css, js/**/*.js\"",
+    "watch": "npm-run-all --parallel watch:css serve"
   }
 }
