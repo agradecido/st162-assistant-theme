@@ -5,6 +5,7 @@
  * navigation support for dropdown menus.
  */
 ( function() {
+	console.log( 'Navigation script loaded.' );
 	const siteNavigation = document.getElementById( 'site-navigation' );
 
 	// Return early if the navigation doesn't exist.
@@ -44,9 +45,11 @@
 
 	// Remove the .toggled class and set aria-expanded to false when the user clicks outside the navigation.
 	document.addEventListener( 'click', function( event ) {
+		console.log( 'Document click event triggered.' );
 		const isClickInside = siteNavigation.contains( event.target );
 
 		if ( ! isClickInside ) {
+			console.log( 'Click outside the navigation detected.' );
 			siteNavigation.classList.remove( 'toggled' );
 			button.setAttribute( 'aria-expanded', 'false' );
 		}
@@ -72,7 +75,7 @@
 	/**
 	 * Sets or removes .focus class on an element.
 	 */
-	function toggleFocus() {
+	function toggleFocus(event) {
 		if ( event.type === 'focus' || event.type === 'blur' ) {
 			let self = this;
 			// Move up through the ancestors of the current link until we hit .nav-menu.

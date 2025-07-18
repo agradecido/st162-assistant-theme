@@ -12,9 +12,13 @@ if ( ! defined( '_S_VERSION' ) ) {
 	define( '_S_VERSION', '1.0.0' );
 }
 
-if ( ! defined ( 'THEME_VERSION' ) ) {
+if ( ! defined( 'THEME_VERSION' ) ) {
 	define( 'THEME_VERSION', '1.0.0' );
-}	
+}
+
+if ( ! defined( 'TXT_DOMAIN' ) ) {
+	define( 'TEXT_DOMAIN', 'st162-assistant-theme' );
+}
 
 /**
  * Sets up theme defaults and registers support for various WordPress features.
@@ -28,9 +32,9 @@ function st162_assistant_theme_setup() {
 		* Make theme available for translation.
 		* Translations can be filed in the /languages/ directory.
 		* If you're building a theme based on ST162-Assistant-theme, use a find and replace
-		* to change 'st162-assistant-theme' to the name of your theme in all the template files.
+		* to change TEXT_DOMAIN to the name of your theme in all the template files.
 		*/
-	load_theme_textdomain( 'st162-assistant-theme', get_template_directory() . '/languages' );
+	load_theme_textdomain( TEXT_DOMAIN, get_template_directory() . '/languages' );
 
 	// Add default posts and comments RSS feed links to head.
 	add_theme_support( 'automatic-feed-links' );
@@ -53,7 +57,7 @@ function st162_assistant_theme_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'st162-assistant-theme' ),
+			'menu-1' => esc_html__( 'Primary', TEXT_DOMAIN ),
 		)
 	);
 
@@ -129,9 +133,9 @@ add_action( 'after_setup_theme', 'st162_assistant_theme_content_width', 0 );
 function st162_assistant_theme_widgets_init() {
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Sidebar', 'st162-assistant-theme' ),
+			'name'          => esc_html__( 'Sidebar', TEXT_DOMAIN ),
 			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'st162-assistant-theme' ),
+			'description'   => esc_html__( 'Add widgets here.', TEXT_DOMAIN ),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
