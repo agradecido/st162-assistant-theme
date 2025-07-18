@@ -12,6 +12,10 @@ if ( ! defined( '_S_VERSION' ) ) {
 	define( '_S_VERSION', '1.0.0' );
 }
 
+if ( ! defined ( 'THEME_VERSION' ) ) {
+	define( 'THEME_VERSION', '1.0.0' );
+}	
+
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -141,9 +145,9 @@ add_action( 'widgets_init', 'st162_assistant_theme_widgets_init' );
  * Enqueue scripts and styles.
  */
 function st162_assistant_theme_scripts() {
-	wp_enqueue_style( 'st162-assistant-theme-style', get_stylesheet_uri(), array(), $st162_assistant_theme_version );
+	wp_enqueue_style( 'st162-assistant-theme-style', get_stylesheet_uri(), array(), THEME_VERSION );
 
-	wp_enqueue_script( 'st162-assistant-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), $st162_assistant_theme_version, true );
+	wp_enqueue_script( 'st162-assistant-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), THEME_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
