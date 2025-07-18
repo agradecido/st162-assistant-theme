@@ -45,12 +45,12 @@
 		</div><!-- .site-branding -->
 
 		<nav id="site-navigation" class="main-navigation relative">
-                       <button class="menu-toggle md:hidden flex flex-col items-center justify-center w-8 h-8 space-y-1" aria-controls="primary-menu" aria-expanded="false">
-                               <span class="block w-6 h-0.5 bg-white"></span>
-                               <span class="block w-6 h-0.5 bg-white"></span>
-                               <span class="block w-6 h-0.5 bg-white"></span>
-                               <span class="sr-only"><?php esc_html_e( 'Primary Menu', 'st162-assistant-theme' ); ?></span>
-                       </button>
+			<button class="menu-toggle md:hidden flex flex-col items-center justify-center w-8 h-8 space-y-1" aria-controls="primary-menu" aria-expanded="false">
+					<span class="block w-6 h-0.5 bg-white"></span>
+					<span class="block w-6 h-0.5 bg-white"></span>
+					<span class="block w-6 h-0.5 bg-white"></span>
+					<span class="sr-only"><?php esc_html_e( 'Primary Menu', 'st162-assistant-theme' ); ?></span>
+			</button>
 			<?php
 			wp_nav_menu(
 				array(

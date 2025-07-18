@@ -14,6 +14,44 @@
 
 @layer components {
   .btn { @apply inline-block bg-primary text-white font-semibold py-2 px-4 rounded hover:bg-secondary transition-colors; }
-  #site-navigation ul { @apply hidden flex-col space-y-2 md:flex md:flex-row md:space-y-0 md:space-x-4; }
-  #site-navigation.toggled ul { @apply block bg-dark text-light absolute left-0 top-full w-full p-4; }
+  
+  /* Menú de navegación */
+  #site-navigation ul { 
+    @apply hidden flex-col space-y-2 md:flex md:flex-row md:space-y-0 md:space-x-4;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  /* Menú móvil cuando está abierto */
+  #site-navigation.toggled ul { 
+    border-top: 1px solid #ccc;
+    display: block !important;
+    position: fixed;
+    top: 84px; /* Ajustar según la altura del header */
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: #1f2937;
+    color: #f9fafb;
+    padding: 1rem;
+    z-index: 9999;
+    margin: 0;
+    box-sizing: border-box;
+    transform: translateY(0);
+    opacity: 1;
+    animation: slideDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  /* Animación de slide down */
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 }

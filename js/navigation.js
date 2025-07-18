@@ -13,17 +13,17 @@
 		return;
 	}
 
-	const button = siteNavigation.getElementsByTagName( 'button' )[ 0 ];
+	const button = siteNavigation.querySelector( '.menu-toggle' );
 
 	// Return early if the button doesn't exist.
-	if ( 'undefined' === typeof button ) {
+	if ( ! button ) {
 		return;
 	}
 
-	const menu = siteNavigation.getElementsByTagName( 'ul' )[ 0 ];
+	const menu = siteNavigation.querySelector( '#primary-menu' );
 
 	// Hide menu toggle button if menu is empty and return early.
-	if ( 'undefined' === typeof menu ) {
+	if ( ! menu ) {
 		button.style.display = 'none';
 		return;
 	}
