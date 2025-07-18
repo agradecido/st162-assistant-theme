@@ -73,6 +73,9 @@
 	 * Sets or removes .focus class on an element.
 	 */
 	function toggleFocus(event) {
+		if (!event) {
+			return;
+		}
 		if ( event.type === 'focus' || event.type === 'blur' ) {
 			let self = this;
 			// Move up through the ancestors of the current link until we hit .nav-menu.
