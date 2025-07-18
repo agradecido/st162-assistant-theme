@@ -5,7 +5,6 @@
  * navigation support for dropdown menus.
  */
 ( function() {
-	console.log( 'Navigation script loaded.' );
 	const siteNavigation = document.getElementById( 'site-navigation' );
 
 	// Return early if the navigation doesn't exist.
@@ -45,11 +44,9 @@
 
 	// Remove the .toggled class and set aria-expanded to false when the user clicks outside the navigation.
 	document.addEventListener( 'click', function( event ) {
-		console.log( 'Document click event triggered.' );
 		const isClickInside = siteNavigation.contains( event.target );
 
 		if ( ! isClickInside ) {
-			console.log( 'Click outside the navigation detected.' );
 			siteNavigation.classList.remove( 'toggled' );
 			button.setAttribute( 'aria-expanded', 'false' );
 		}
