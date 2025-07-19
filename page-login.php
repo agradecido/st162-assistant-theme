@@ -16,6 +16,7 @@ $args = array(
     'redirect' => home_url(),
 );
 ?>
+<h1>Login</h1>
 <main id="primary" class="site-main container mx-auto p-2 sm:p-4">
     <?php wp_login_form( $args ); ?>
 </main>

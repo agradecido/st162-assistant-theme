@@ -27,8 +27,8 @@
   },
   "scripts": {
     "compile:css": "stylelint '*.css' --fix",
-    "build:css": "tailwindcss -i ./assets/css/src/main.css -o style.css --minify",
-    "watch:css": "tailwindcss -i ./assets/css/src/main.css -o style.css --minify --watch",
+    "build:css": "node build-css.js",
+    "watch:css": "node watch-css.js",
     "lint:js": "wp-scripts lint-js 'js/*.js'",
     "bundle": "dir-archiver --src . --dest ../st162-assistant-theme.zip --exclude .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore README.md composer.json composer.lock node_modules vendor package-lock.json package.json .travis.yml phpcs.xml.dist sass style.css.map yarn.lock",
     "serve": "browser-sync start --proxy http://localhost:8000 --files \"**/*.php, style.css, js/**/*.js\"",
