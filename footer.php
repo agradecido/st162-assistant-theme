@@ -14,11 +14,12 @@
 	<footer id="colophon" class="site-footer bg-dark text-light py-6 px-4 text-center">
 		<div class="site-info text-sm">
 				<?php
-				printf( esc_html__( 'Proudly powered by %s', 'st162-assistant-theme' ), 'WP API Assistant' );
+				// translators: %s: WordPress AI Assistant plugin name.
+				printf( esc_html__( 'celica.info is proudly powered by %s', 'st162-assistant-theme' ), 'WP AI Assistant' );
 				?>
 			<span class="sep"> | </span>
 				<?php
-				printf( esc_html__( 'Theme based on ', 'st162-assistant-theme' ), ' <a href="http://underscores.me/">Underscores.me</a>' );
+				printf( esc_html__( 'Theme based on Underscores.me', 'st162-assistant-theme' ), 'celica.info' );
 				?>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
