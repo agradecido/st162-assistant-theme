@@ -16,7 +16,7 @@ if ( ! defined( 'THEME_VERSION' ) ) {
 	define( 'THEME_VERSION', '1.0.0' );
 }
 
-if ( ! defined( 'TXT_DOMAIN' ) ) {
+if ( ! defined( 'TEXT_DOMAIN' ) ) {
 	define( 'TEXT_DOMAIN', 'st162-assistant-theme' );
 }
 
@@ -34,7 +34,7 @@ function st162_assistant_theme_setup() {
 		* If you're building a theme based on ST162-Assistant-theme, use a find and replace
 		* to change TEXT_DOMAIN to the name of your theme in all the template files.
 		*/
-	load_theme_textdomain( TEXT_DOMAIN, get_template_directory() . '/languages' );
+	load_theme_textdomain( 'st162-assistant-theme', get_template_directory() . '/languages' );
 
 	// Add default posts and comments RSS feed links to head.
 	add_theme_support( 'automatic-feed-links' );
@@ -57,7 +57,7 @@ function st162_assistant_theme_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', TEXT_DOMAIN ),
+			'menu-1' => esc_html__( 'Primary', 'st162-assistant-theme'),
 		)
 	);
 

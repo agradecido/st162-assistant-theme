@@ -14,7 +14,7 @@
 	<footer id="colophon" class="site-footer bg-dark text-light py-6 px-4 text-center">
 		<div class="site-info text-sm">
 				<?php
-				printf( esc_html__( 'Proudly powered by %s', 'st162-assistant-theme' ), 'WP API Assistant' );
+				printf( esc_html__( 'Proudly powered by %s', 'st162-assistant-theme' ), 'WP AI Assistant' );
 				?>
 			<span class="sep"> | </span>
 				<?php
