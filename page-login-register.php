@@ -18,27 +18,8 @@ get_header();
 
             <div class="entry-content">
                 <div id="login-register-forms">
-                    <div id="login-form-wrap">
-                        <h2><?php _e( 'Login', 'st162-assistant-theme' ); ?></h2>
-                        <form id="loginform" action="<?php echo wp_login_url(); ?>" method="post">
-                            <p>
-                                <label for="user_login"><?php _e( 'Username or Email Address', 'st162-assistant-theme' ); ?></label>
-                                <input type="text" name="log" id="user_login" class="input" value="" size="20" />
-                            </p>
-                            <p>
-                                <label for="user_pass"><?php _e( 'Password', 'st162-assistant-theme' ); ?></label>
-                                <input type="password" name="pwd" id="user_pass" class="input" value="" size="20" />
-                            </p>
-                            <p class="login-remember"><label><input name="rememberme" type="checkbox" id="rememberme" value="forever" /> <?php _e( 'Remember Me', 'st162-assistant-theme' ); ?></label></p>
-                            <p class="login-submit">
-                                <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="<?php esc_attr_e( 'Log In', 'st162-assistant-theme' ); ?>" />
-                                <input type="hidden" name="redirect_to" value="<?php echo home_url(); ?>" />
-                            </p>
-                        </form>
-                    </div>
-
                     <div id="register-form-wrap">
-                        <h2><?php _e( 'Register', 'st162-assistant-theme' ); ?></h2>
+                        <h2><?php _e( 'Sign up', 'st162-assistant-theme' ); ?></h2>
                         <form id="registerform" action="<?php echo esc_url( site_url( 'wp-login.php?action=register', 'login_post' ) ); ?>" method="post">
                             <p>
                                 <label for="user_login"><?php _e( 'Username', 'st162-assistant-theme' ); ?></label>
@@ -57,6 +38,29 @@ get_header();
                             </p>
                         </form>
                     </div>
+                    
+                    <!-- Separador -->
+                    <div class="separator">OR</div>
+                    
+                    <div id="login-form-wrap">
+                        <h2><?php _e( 'Sign in', 'st162-assistant-theme' ); ?></h2>
+                        <form id="loginform" action="<?php echo wp_login_url(); ?>" method="post">
+                            <p>
+                                <label for="user_login"><?php _e( 'Username or Email Address', 'st162-assistant-theme' ); ?></label>
+                                <input type="text" name="log" id="user_login" class="input" value="" size="20" />
+                            </p>
+                            <p>
+                                <label for="user_pass"><?php _e( 'Password', 'st162-assistant-theme' ); ?></label>
+                                <input type="password" name="pwd" id="user_pass" class="input" value="" size="20" />
+                            </p>
+                            <p class="login-remember"><label><input name="rememberme" type="checkbox" id="rememberme" value="forever" /> <?php _e( 'Remember Me', 'st162-assistant-theme' ); ?></label></p>
+                            <p class="login-submit">
+                                <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="<?php esc_attr_e( 'Log In', 'st162-assistant-theme' ); ?>" />
+                                <input type="hidden" name="redirect_to" value="<?php echo home_url(); ?>" />
+                            </p>
+                        </form>
+                    </div>
+
                 </div>
             </div><!-- .entry-content -->
         </article><!-- #post-## -->
