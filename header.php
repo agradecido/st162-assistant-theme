@@ -54,23 +54,13 @@
 					<span class="block w-6 h-0.5 bg-white"></span>
 					<span class="sr-only"><?php esc_html_e('Primary Menu', 'st162-assistant-theme'); ?></span>
 				</button>
-				<div class="menu-main-menu-es-container">
-					<ul id="primary-menu" class="menu nav-menu">
-						<li id="menu-item-254" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-2 current_page_item menu-item-254"><a href="http://localhost:8000/es/" aria-current="page">Toyota Celica 4Gen Assistant</a></li>
-						<li id="menu-item-250" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-250"><a href="http://localhost:8000/es/contacto/">Contacto</a></li>
-						<li id="menu-item-249" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-249"><a href="http://localhost:8000/es/aviso-legal/">Aviso legal</a></li>
-						<li id="menu-item-274-en" class="lang-item lang-item-11 lang-item-en lang-item-first menu-item menu-item-type-custom menu-item-object-custom menu-item-274-en"><a href="http://localhost:8000/" hreflang="en-US" lang="en-US">English</a></li>
-						<li id="menu-item-274-es" class="lang-item lang-item-8 lang-item-es current-lang menu-item menu-item-type-custom menu-item-object-custom current_page_item menu-item-home menu-item-274-es"><a href="http://localhost:8000/es/" hreflang="es-ES" lang="es-ES">Español</a></li>
-					</ul>
-				</div>
 				<?php
-				/** 
-			wp_nav_menu(
-				array(
-					'theme_location'  => 'menu-1',
-					'menu_id'         => 'primary-menu',
-				)
-			); */
+				wp_nav_menu(
+					array(
+						'theme_location'  => 'menu-1',
+						'menu_id'         => 'primary-menu',
+					)
+				);
 				?>
 			</nav><!-- #site-navigation -->
 		</header><!-- #masthead -->

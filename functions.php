@@ -160,28 +160,138 @@ function st162_assistant_theme_scripts() {
 add_action( 'wp_enqueue_scripts', 'st162_assistant_theme_scripts' );
 
 /**
- * Implement the Custom Header feature.
- */
-require get_template_directory() . '/inc/custom-header.php';
-
-/**
- * Custom template tags for this theme.
- */
-require get_template_directory() . '/inc/template-tags.php';
-
-/**
- * Functions which enhance the theme by hooking into WordPress.
- */
-require get_template_directory() . '/inc/template-functions.php';
-
-/**
- * Customizer additions.
- */
-require get_template_directory() . '/inc/customizer.php';
-
-/**
  * Load Jetpack compatibility file.
  */
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+/**
+ * Redirect classic WordPress login page to custom login page
+ */
+function st162_redirect_login_page() {
+    // No redirigir si es área de admin o ya está logueado
+    if ( is_admin() || is_user_logged_in() ) {
+        return;
+    }
+
+    // Solo en peticiones GET (permitir POST para procesar login)
+    if ( 'POST' === strtoupper( $_SERVER['REQUEST_METHOD'] ) ) {
+        return;
+    }
+
+    // Detectar wp-login.php sin action (ni logout, lostpassword…)
+    if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+        $page = basename( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
+        if ( 'wp-login.php' === $page && ! isset( $_GET['action'] ) ) {
+            // Si vienen con redirect_to apuntando a wp-admin, no redirigir
+            if ( isset( $_GET['redirect_to'] ) && false !== strpos( wp_unslash( $_GET['redirect_to'] ), 'wp-admin' ) ) {
+                return;
+            }
+            wp_safe_redirect( home_url( '/login' ) );
+            exit();
+        }
+    }
+}
+add_action( 'init', 'st162_redirect_login_page', 0 );
+
+function st162_login_redirect( $redirect_to, $request, $user ) {
+    // Si hubo error, dejamos el comportamiento por defecto
+    if ( is_wp_error( $user ) || ! $user instanceof WP_User ) {
+        return $redirect_to;
+    }
+
+    // Admin al dashboard
+    if ( user_can( $user, 'manage_options' ) ) {
+        return admin_url();
+    }
+
+    // Resto a home
+    return home_url();
+}
+add_filter( 'login_redirect', 'st162_login_redirect', 10, 3 );
+
+add_filter( 'login_redirect', 'st162_login_redirect', 10, 3 );
+
+/**
+ * Redirect after logout to custom login page
+ */
+function st162_logout_redirect() {
+	wp_safe_redirect( home_url( '/login' ) );
+	exit();
+}
+add_action( 'wp_logout', 'st162_logout_redirect' );
+
+/**
+ * Redirect failed logins to custom login page with error
+ */
+function st162_login_failed() {
+	wp_safe_redirect( home_url( '/login?login=failed' ) );
+	exit();
+}
+add_action( 'wp_login_failed', 'st162_login_failed' );
+
+/**
+ * Redirect when login form is empty
+ *
+ * @param WP_User|WP_Error|null $user     User object or error.
+ * @param string                $username Username for authentication.
+ * @param string                $password Password for authentication.
+ * @return WP_User|WP_Error|null
+ */
+function st162_verify_username_password( $user, $username, $password ) {
+	if ( '' === $username || '' === $password ) {
+		wp_safe_redirect( home_url( '/login?login=empty' ) );
+		exit();
+	}
+	return $user;
+}
+add_filter( 'authenticate', 'st162_verify_username_password', 1, 3 );
+
+/**
+ * Handle custom registration form processing
+ */
+function st162_handle_registration() {
+	if ( ! isset( $_POST['wp-submit'] ) || ! isset( $_POST['user_login'] ) || ! isset( $_POST['user_email'] ) ) {
+		return;
+	}
+
+	// Verify nonce if present.
+	if ( isset( $_POST['register_nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['register_nonce'] ) ), 'st162_register_action' ) ) {
+		wp_safe_redirect( home_url( '/login?register=failed&error=nonce_failed' ) );
+		exit();
+	}
+
+	// Basic validation.
+	$username = sanitize_user( wp_unslash( $_POST['user_login'] ) );
+	$email    = sanitize_email( wp_unslash( $_POST['user_email'] ) );
+	$password = isset( $_POST['user_pass'] ) ? sanitize_text_field( wp_unslash( $_POST['user_pass'] ) ) : '';
+
+	if ( empty( $username ) || empty( $email ) || empty( $password ) ) {
+		wp_safe_redirect( home_url( '/login?register=failed&error=empty_fields' ) );
+		exit();
+	}
+
+	if ( username_exists( $username ) ) {
+		wp_safe_redirect( home_url( '/login?register=failed&error=username_exists' ) );
+		exit();
+	}
+
+	if ( email_exists( $email ) ) {
+		wp_safe_redirect( home_url( '/login?register=failed&error=email_exists' ) );
+		exit();
+	}
+
+	// Create user.
+	$user_id = wp_create_user( $username, $password, $email );
+
+	if ( is_wp_error( $user_id ) ) {
+		wp_safe_redirect( home_url( '/login?register=failed&error=creation_failed' ) );
+		exit();
+	}
+
+	// Success.
+	wp_safe_redirect( home_url( '/login?register=success' ) );
+	exit();
+}
+add_action( 'init', 'st162_handle_registration' );

@@ -14,8 +14,6 @@
 		<?php the_title( '<h1 class="entry-title text-3xl font-bold text-dark">', '</h1>' ); ?>
 	</header><!-- .entry-header -->
 
-	<?php st162_assistant_theme_post_thumbnail(); ?>
-
 	<div class="entry-content text-neutral leading-relaxed">
 		<?php
 		the_content();
