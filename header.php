@@ -26,8 +26,8 @@
 	<div id="page" class="site">
 		<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'st162-assistant-theme'); ?></a>
 
-		<header id="masthead" class="site-header bg-dark text-light px-4 py-4 flex items-center justify-between relative" style="border: 1px solid lime;">
-			<div class="site-branding" style="border: 1px solid lime;">
+		<header id="masthead" class="site-header bg-dark text-light px-4 py-4 flex items-center justify-between relative">
+			<div class="site-branding">
 				<?php
 				the_custom_logo();
 				if (is_front_page() && is_home()) :
@@ -47,7 +47,7 @@
 				<?php endif; ?>
 			</div><!-- .site-branding -->
 
-			<nav id="site-navigation" class="main-navigation" style="border: 1px solid lime;">
+			<nav id="site-navigation">
 				<button class="menu-toggle md:hidden flex flex-col items-center justify-center w-8 h-8 space-y-1" aria-controls="primary-menu" aria-expanded="false">
 					<span class="block w-6 h-0.5 bg-white"></span>
 					<span class="block w-6 h-0.5 bg-white"></span>

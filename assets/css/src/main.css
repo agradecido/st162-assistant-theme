@@ -42,9 +42,7 @@
 
 /* Menú de navegación */
 #site-navigation ul {
-  @apply hidden flex-col space-y-2 md:flex md:flex-row md:space-y-0 md:space-x-4;
-  transform: translateY(-100%);
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  @apply hidden flex-col space-y-2 md:flex md:flex-row md:space-y-0 md:space-x-4;   
 }
 
 /* Menú móvil cuando está abierto */
@@ -134,7 +132,7 @@
 }
 
 #login-register-forms .button-primary {
-   @apply bg-primary;
+  @apply bg-primary;
 }
 
 /* Estilos del separador "OR" */
@@ -251,7 +249,7 @@
 }
 
 /* Responsive tweak: stack forms on narrow screens. */
-@media (max-width: 600px) {
+@media (max-width: 1023px) {
   #login-register-forms {
     flex-direction: column;
     /* Stack vertically. */
@@ -259,7 +257,7 @@
 }
 
 /* En móvil, opcional: apilar y ocultar líneas si sobra espacio */
-@media (max-width: 600px) {
+@media (max-width: 1023px) {
   #login-register-forms {
     flex-direction: column;
   }
@@ -273,9 +271,10 @@
   .separator::after {
     display: none;
   }
-  #chatbot-container #chat-submit,
-  #chatbot-container #chat-submit:hover,
-  #chatbot-container #chat-submit:focus {
-   @apply bg-primary;
-  }
+}
+
+#chatbot-container #chat-submit,
+#chatbot-container #chat-submit:hover,
+#chatbot-container #chat-submit:focus {
+  @apply bg-primary;
 }
