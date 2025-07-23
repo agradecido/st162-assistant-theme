@@ -7,6 +7,8 @@
  * @package ST162-Assistant-theme
  */
 
+use Avifinfo\Tile;
+
 if ( ! defined( '_S_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
 	define( '_S_VERSION', '1.0.0' );
@@ -18,6 +20,10 @@ if ( ! defined( 'THEME_VERSION' ) ) {
 
 if ( ! defined( 'TEXT_DOMAIN' ) ) {
 	define( 'TEXT_DOMAIN', 'st162-assistant-theme' );
+}
+
+if ( ! defined( 'LOGIN_LINK_CLASS' ) ) {
+	define( 'LOGIN_LINK_CLASS', 'login-button' );
 }
 
 /**
@@ -57,7 +63,7 @@ function st162_assistant_theme_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'st162-assistant-theme'),
+			'menu-1' => esc_html__( 'Primary', 'st162-assistant-theme' ),
 		)
 	);
 
@@ -170,44 +176,44 @@ if ( defined( 'JETPACK__VERSION' ) ) {
  * Redirect classic WordPress login page to custom login page
  */
 function st162_redirect_login_page() {
-    // No redirigir si es área de admin o ya está logueado
-    if ( is_admin() || is_user_logged_in() ) {
-        return;
-    }
+	// No redirigir si es área de admin o ya está logueado
+	if ( is_admin() || is_user_logged_in() ) {
+		return;
+	}
 
-    // Solo en peticiones GET (permitir POST para procesar login)
-    if ( 'POST' === strtoupper( $_SERVER['REQUEST_METHOD'] ) ) {
-        return;
-    }
+	// Solo en peticiones GET (permitir POST para procesar login)
+	if ( 'POST' === strtoupper( $_SERVER['REQUEST_METHOD'] ) ) {
+		return;
+	}
 
-    // Detectar wp-login.php sin action (ni logout, lostpassword…)
-    if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-        $page = basename( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
-        if ( 'wp-login.php' === $page && ! isset( $_GET['action'] ) ) {
-            // Si vienen con redirect_to apuntando a wp-admin, no redirigir
-            if ( isset( $_GET['redirect_to'] ) && false !== strpos( wp_unslash( $_GET['redirect_to'] ), 'wp-admin' ) ) {
-                return;
-            }
-            wp_safe_redirect( home_url( '/login' ) );
-            exit();
-        }
-    }
+	// Detectar wp-login.php sin action (ni logout, lostpassword…)
+	if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+		$page = basename( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
+		if ( 'wp-login.php' === $page && ! isset( $_GET['action'] ) ) {
+			// Si vienen con redirect_to apuntando a wp-admin, no redirigir
+			if ( isset( $_GET['redirect_to'] ) && false !== strpos( wp_unslash( $_GET['redirect_to'] ), 'wp-admin' ) ) {
+				return;
+			}
+			wp_safe_redirect( home_url( '/login' ) );
+			exit();
+		}
+	}
 }
 add_action( 'init', 'st162_redirect_login_page', 0 );
 
 function st162_login_redirect( $redirect_to, $request, $user ) {
-    // Si hubo error, dejamos el comportamiento por defecto
-    if ( is_wp_error( $user ) || ! $user instanceof WP_User ) {
-        return $redirect_to;
-    }
+	// Si hubo error, dejamos el comportamiento por defecto
+	if ( is_wp_error( $user ) || ! $user instanceof WP_User ) {
+		return $redirect_to;
+	}
 
-    // Admin al dashboard
-    if ( user_can( $user, 'manage_options' ) ) {
-        return admin_url();
-    }
+	// Admin al dashboard
+	if ( user_can( $user, 'manage_options' ) ) {
+		return admin_url();
+	}
 
-    // Resto a home
-    return home_url();
+	// Resto a home
+	return home_url();
 }
 add_filter( 'login_redirect', 'st162_login_redirect', 10, 3 );
 
@@ -295,3 +301,26 @@ function st162_handle_registration() {
 	exit();
 }
 add_action( 'init', 'st162_handle_registration' );
+
+
+/**
+ * Replace login button with username in menu
+ *
+ * @param array  $items Menu items.
+ * @param object $args Menu arguments.
+ * @return array Modified menu items.
+ */
+function replace_login_button_with_username( $items, $args ) {
+	if ( is_user_logged_in() ) {
+		$current_user = wp_get_current_user();
+		foreach ( $items as $item ) {
+			if ( in_array( LOGIN_LINK_CLASS, $item->classes, true ) ) {
+				// $item->title = esc_html( $current_user->display_name );
+				$item->title = 'Logout';
+				$item->url   = wp_logout_url( home_url() );
+			}
+		}
+	}
+	return $items;
+}
+add_filter( 'wp_nav_menu_objects', 'replace_login_button_with_username', 10, 2 );
