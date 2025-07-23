@@ -10,8 +10,8 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'mb-8 p-4 sm:p-6 bg-white shadow-md rounded-lg' ); ?>>
-	<header class="entry-header mb-4">
-		<?php
+    <header class="entry-header mb-4">
+        <?php
 		if ( is_singular() ) :
 			the_title( '<h1 class="entry-title text-3xl font-bold text-dark hover:text-primary transition-colors duration-200">', '</h1>' );
 		else :
@@ -20,19 +20,14 @@
 
 		if ( 'post' === get_post_type() ) :
 			?>
-			<div class="entry-meta text-sm text-neutral mt-2">
-				<?php
-				st162_assistant_theme_posted_on();
-				st162_assistant_theme_posted_by();
-				?>
-			</div><!-- .entry-meta -->
-		<?php endif; ?>
-	</header><!-- .entry-header -->
+        <div class="entry-meta text-sm text-neutral mt-2">
 
-	<?php st162_assistant_theme_post_thumbnail(); ?>
+        </div><!-- .entry-meta -->
+        <?php endif; ?>
+    </header><!-- .entry-header -->
 
-	<div class="entry-content text-neutral leading-relaxed">
-		<?php
+    <div class="entry-content text-neutral leading-relaxed">
+        <?php
 		the_content(
 			sprintf(
 				wp_kses(
@@ -55,9 +50,9 @@
 			)
 		);
 		?>
-	</div><!-- .entry-content -->
+    </div><!-- .entry-content -->
 
-	<footer class="entry-footer mt-4 text-sm text-neutral">
-		<?php st162_assistant_theme_entry_footer(); ?>
-	</footer><!-- .entry-footer -->
+    <footer class="entry-footer mt-4 text-sm text-neutral">
+
+    </footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->

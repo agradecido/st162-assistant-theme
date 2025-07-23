@@ -3,44 +3,278 @@
 @tailwind utilities;
 
 @layer base {
-  h1 { @apply text-4xl font-bold mb-4; }
-  h2 { @apply text-3xl font-semibold mb-4; }
-  h3 { @apply text-2xl font-semibold mb-3; }
-  h4 { @apply text-xl font-semibold mb-2; }
-  h5 { @apply text-lg font-semibold mb-1; }
-  h6 { @apply text-base font-semibold; }
-  blockquote { @apply border-l-4 border-accent pl-4 italic text-neutral mb-4; }
+  h1 {
+    @apply text-4xl font-bold mb-4;
+  }
+
+  h2 {
+    @apply text-3xl font-semibold mb-4;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold mb-3;
+  }
+
+  h4 {
+    @apply text-xl font-semibold mb-2;
+  }
+
+  h5 {
+    @apply text-lg font-semibold mb-1;
+  }
+
+  h6 {
+    @apply text-base font-semibold;
+  }
+
+  blockquote {
+    @apply border-l-4 border-accent pl-4 italic text-neutral mb-4;
+  }
 }
 
 @layer components {
-  .btn { @apply inline-block bg-primary text-white font-semibold py-2 px-4 rounded hover:bg-secondary transition-colors; }
-  
-  /* Menú de navegación */
-  #site-navigation ul { 
-    @apply hidden flex-col space-y-2 md:flex md:flex-row md:space-y-0 md:space-x-4;
-    transform: translateY(-100%);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  .btn {
+    @apply inline-block bg-primary text-white font-semibold py-2 px-4 rounded hover: bg-secondary transition-colors;
   }
-  
-  /* Menú móvil cuando está abierto */
-  #site-navigation.toggled ul { 
-    border-top: 1px solid #ccc;
-    display: block !important;
-    position: fixed;
-    top: 84px; /* Ajustar según la altura del header */
-    left: 0;
-    right: 0;
-    width: 100%;
-    background: #1f2937;
-    color: #f9fafb;
-    padding: 1rem;
-    z-index: 9999;
-    margin: 0;
-    box-sizing: border-box;
-    transform: translateY(0);
+
+}
+
+
+/* Menú de navegación */
+#site-navigation ul {
+  @apply hidden flex-col space-y-2 md:flex md:flex-row md:space-y-0 md:space-x-4;   
+}
+
+/* Menú móvil cuando está abierto */
+#site-navigation.toggled ul {
+  border-top: 1px solid #ccc;
+  display: block !important;
+  position: fixed;
+  top: 84px;
+  /* Ajustar según la altura del header */
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #1f2937;
+  color: #f9fafb;
+  padding: 1rem;
+  z-index: 9999;
+  margin: 0;
+  box-sizing: border-box;
+  transform: translateY(0);
+}
+
+#site-navigation ul li a:hover {
+  cursor: pointer;
+}
+
+#primary-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+
+#primary-menu .menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#primary-menu .menu-item {
+  margin: 0;
+}
+
+#primary-menu .menu-item a {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/**
+ * Forms styles
+  * These styles are for the Contact Form 7 plugin.
+  */
+.wpcf7-form-control.wpcf7-text,
+.wpcf7-form-control.wpcf7-textarea {
+  border: 1px solid #1f2937;
+  border-radius: 5px;
+}
+
+.wpcf7-form-control.wpcf7-submit {
+  background-color: #1f2937;
+  color: #f9fafb;
+  border: none;
+  padding: 5px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Container for both forms. */
+#login-register-forms {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  /* Centra verticalmente los items */
+  gap: 1rem;
+  /* Espacio mínimo entre items */
+  margin: 2rem auto;
+  max-width: 800px;
+  padding: 1rem;
+}
+
+#login-register-forms .button-primary {
+  @apply bg-primary;
+}
+
+/* Estilos del separador "OR" */
+.separator {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: #666;
+  margin: 0 0.5rem;
+}
+
+/* Líneas a ambos lados del "OR" */
+.separator::before,
+.separator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #ccc;
+  margin: 0 0.5rem;
+}
+
+/* Individual form wrappers. */
+#login-form-wrap,
+#register-form-wrap {
+  flex: 1 1 300px;
+  /* Grow, shrink, and set base width. */
+  background: #f9f9f9;
+  /* Light background. */
+  border: 1px solid #ddd;
+  /* Subtle border. */
+  border-radius: 8px;
+  /* Rounded corners. */
+  padding: 1.5rem;
+  /* Inner padding. */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  /* Soft shadow. */
+}
+
+/* Form titles. */
+#login-form-wrap h2,
+#register-form-wrap h2 {
+  margin-bottom: 1rem;
+  /* Space below heading. */
+  font-size: 1.5rem;
+  /* Larger font. */
+  text-align: center;
+  /* Center title. */
+}
+
+/* Common input styles. */
+#login-register-forms .input {
+  width: 100%;
+  /* Full width. */
+  padding: 0.5rem;
+  /* Comfortable padding. */
+  margin-top: 0.25rem;
+  /* Space above input. */
+  margin-bottom: 1rem;
+  /* Space below input. */
+  border: 1px solid #ccc;
+  /* Standard border. */
+  border-radius: 4px;
+  /* Slight rounding. */
+  font-size: 1rem;
+  /* Readable text. */
+}
+
+/* Label styles. */
+#login-register-forms label {
+  display: block;
+  /* Full-width labels. */
+  font-weight: bold;
+  /* Emphasize labels. */
+}
+
+/* Remember me checkbox alignment. */
+.login-remember {
+  display: flex;
+  /* Use flex for checkbox and label. */
+  align-items: center;
+  /* Vertical align. */
+  margin-bottom: 1rem;
+  /* Space below. */
+}
+
+/* Button styles. */
+.button-primary {
+  display: inline-block;
+  /* Inline-block for button behavior. */
+  width: 100%;
+  /* Full width across form. */
+  padding: 0.75rem;
+  /* Generous padding. */
+  background-color: #0073aa;
+  /* WP blue. */
+  border: none;
+  /* Remove default border. */
+  border-radius: 4px;
+  /* Rounded corners. */
+  color: #fff;
+  /* White text. */
+  font-size: 1rem;
+  /* Consistent sizing. */
+  cursor: pointer;
+  /* Pointer on hover. */
+  text-align: center;
+  /* Center text. */
+}
+
+/* Button hover state. */
+.button-primary:hover {
+  background-color: #005177;
+  /* Darker blue on hover. */
+}
+
+/* Responsive tweak: stack forms on narrow screens. */
+@media (max-width: 1023px) {
+  #login-register-forms {
+    flex-direction: column;
+    /* Stack vertically. */
   }
 }
 
-  #site-navigation ul li a:hover {
-    cursor: pointer;
+/* En móvil, opcional: apilar y ocultar líneas si sobra espacio */
+@media (max-width: 1023px) {
+  #login-register-forms {
+    flex-direction: column;
   }
+
+  .separator {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .separator::before,
+  .separator::after {
+    display: none;
+  }
+}
+
+#chatbot-container #chat-submit,
+#chatbot-container #chat-submit:hover,
+#chatbot-container #chat-submit:focus {
+  @apply bg-primary;
+}
