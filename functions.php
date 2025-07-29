@@ -323,3 +323,17 @@ function replace_login_button_with_username( $items, $args ) {
 	return $items;
 }
 add_filter( 'wp_nav_menu_objects', 'replace_login_button_with_username', 10, 2 );
+
+/**
+ * Set custom thumbnail size for the theme
+ *
+ * @return array Thumbnail size configuration.
+ */
+function st162_assistant_theme_thumbnail_size() {
+	return array(
+		'width'  => 250,
+		'height' => 117,
+		'crop'   => false,
+	);
+}
+add_filter( 'st162_assistant_theme_thumbnail_size', 'st162_assistant_theme_thumbnail_size' );
