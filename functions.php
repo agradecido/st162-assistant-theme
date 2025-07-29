@@ -337,3 +337,66 @@ function st162_assistant_theme_thumbnail_size() {
 	);
 }
 add_filter( 'st162_assistant_theme_thumbnail_size', 'st162_assistant_theme_thumbnail_size' );
+
+/**
+ * TEMPORAL: Función de diagnóstico para identificar scripts problemáticos
+ * TODO: Remover después del diagnóstico
+ */
+function debug_enqueued_scripts() {
+	global $wp_scripts;
+	
+	if ( ! current_user_can( 'administrator' ) ) {
+		return;
+	}
+	
+	echo '<div style="background: #f1f1f1; padding: 20px; margin: 20px; border: 1px solid #ccc; position: fixed; top: 0; right: 0; z-index: 9999; max-width: 400px; max-height: 400px; overflow-y: auto;">';
+	echo '<h3>Scripts Problemáticos Detectados:</h3>';
+	
+	$found_issues = false;
+	
+	if ( isset( $wp_scripts->queue ) ) {
+		foreach ( $wp_scripts->queue as $handle ) {
+			if ( isset( $wp_scripts->registered[ $handle ] ) ) {
+				$script = $wp_scripts->registered[ $handle ];
+				
+				// Verificar archivos problemáticos
+				if ( strpos( $script->src, 'sass.dart.js' ) !== false ) {
+					echo '<strong style="color: red;">⚠️ SASS.DART.JS:</strong><br>';
+					echo 'Handle: ' . $handle . '<br>';
+					echo 'Src: ' . $script->src . '<br><br>';
+					$found_issues = true;
+				}
+				if ( strpos( $script->src, 'immutable.es.js' ) !== false ) {
+					echo '<strong style="color: red;">⚠️ IMMUTABLE.ES.JS:</strong><br>';
+					echo 'Handle: ' . $handle . '<br>';
+					echo 'Src: ' . $script->src . '<br><br>';
+					$found_issues = true;
+				}
+				if ( strpos( $script->src, 'chatbot.js' ) !== false ) {
+					echo '<strong style="color: red;">⚠️ CHATBOT.JS:</strong><br>';
+					echo 'Handle: ' . $handle . '<br>';
+					echo 'Src: ' . $script->src . '<br><br>';
+					$found_issues = true;
+				}
+			}
+		}
+	}
+	
+	if ( ! $found_issues ) {
+		echo '<p style="color: green;">No se encontraron scripts problemáticos en la cola actual.</p>';
+		
+		// Mostrar todos los scripts para debug adicional
+		echo '<h4>Todos los scripts enqueueados:</h4>';
+		if ( isset( $wp_scripts->queue ) ) {
+			foreach ( $wp_scripts->queue as $handle ) {
+				if ( isset( $wp_scripts->registered[ $handle ] ) ) {
+					$script = $wp_scripts->registered[ $handle ];
+					echo '<strong>' . $handle . '</strong>: ' . $script->src . '<br>';
+				}
+			}
+		}
+	}
+	
+	echo '</div>';
+}
+add_action( 'wp_footer', 'debug_enqueued_scripts' );
