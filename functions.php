@@ -67,6 +67,7 @@ function st162_assistant_theme_setup() {
 		)
 	);
 
+
 	/*
 		* Switch default core markup for search form, comment form, and comments
 		* to output valid HTML5.
@@ -215,8 +216,6 @@ function st162_login_redirect( $redirect_to, $request, $user ) {
 	// Resto a home
 	return home_url();
 }
-add_filter( 'login_redirect', 'st162_login_redirect', 10, 3 );
-
 add_filter( 'login_redirect', 'st162_login_redirect', 10, 3 );
 
 /**
