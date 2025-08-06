@@ -337,3 +337,344 @@ function st162_assistant_theme_thumbnail_size() {
 	);
 }
 add_filter( 'st162_assistant_theme_thumbnail_size', 'st162_assistant_theme_thumbnail_size' );
+
+/**
+ * Enqueue script for language switcher dropdown functionality
+ */
+function enqueue_language_switcher_script() {
+	?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add debugging to see what we're working with
+    console.log('Language switcher script loaded');
+
+    // Find all language items with more specific selectors
+    const langItems = document.querySelectorAll(
+        '.lang-item, [class*="lang-item"], .pll-parent-menu-item .sub-menu li');
+    console.log('Found language items:', langItems.length, langItems);
+
+    // Also check for Polylang parent container
+    const polylangParent = document.querySelector('.pll-parent-menu-item, [href="#pll_switcher"]');
+    let parentContainer = null;
+    if (polylangParent) {
+        parentContainer = polylangParent.closest('li');
+        console.log('Found Polylang parent container:', parentContainer);
+    }
+
+    if (langItems.length > 1 || parentContainer) {
+        // Find the current language item - prioritize current-lang over lang-item-first
+        let currentLang = document.querySelector('.current-lang') ||
+            document.querySelector('.lang-item-first') ||
+            document.querySelector('.lang-item.current') ||
+            langItems[0];
+        console.log('Current language:', currentLang);
+
+        // Double-check: if we found a current-lang item, use it
+        const currentLangItem = document.querySelector('.current-lang');
+        if (currentLangItem) {
+            currentLang = currentLangItem;
+        }
+
+        console.log('Final current language selected:', currentLang);
+
+        // Get the parent menu - use parentContainer if available, otherwise current language parent
+        const menuContainer = parentContainer ? parentContainer.parentNode : currentLang.parentNode;
+
+        // Create dropdown container
+        const dropdown = document.createElement('li');
+        dropdown.className = 'menu-item menu-item-language-dropdown';
+
+        // Get the current language link content
+        const currentLangLink = currentLang.querySelector('a');
+        if (!currentLangLink) {
+            console.log('No link found in current language item');
+            return;
+        }
+
+        dropdown.innerHTML = `
+			<a href="#" class="language-current">
+				${currentLangLink.innerHTML} <span class="dropdown-arrow">▼</span>
+			</a>
+			<ul class="language-dropdown-menu"></ul>
+		`;
+
+        // Add other languages to dropdown
+        const dropdownMenu = dropdown.querySelector('.language-dropdown-menu');
+        let addedCount = 0;
+        langItems.forEach(function(item) {
+            if (item !== currentLang) {
+                console.log('Adding language item to dropdown:', item);
+                const dropdownItem = document.createElement('li');
+                dropdownItem.className = 'language-dropdown-item';
+                const itemLink = item.querySelector('a');
+                if (itemLink) {
+                    dropdownItem.innerHTML = itemLink.outerHTML;
+                    dropdownMenu.appendChild(dropdownItem);
+                    addedCount++;
+                }
+            } else {
+                console.log('Skipping current language item:', item);
+            }
+        });
+        console.log('Total languages added to dropdown:', addedCount);
+
+        // Replace the first language item with our dropdown
+        const insertionPoint = parentContainer || currentLang;
+        menuContainer.insertBefore(dropdown, insertionPoint);
+
+        // Remove all original language items AND their parent container if it exists
+        langItems.forEach(function(item) {
+            if (item.parentNode) {
+                item.parentNode.removeChild(item);
+            }
+        });
+
+        // Also remove any Polylang parent menu item (the one with #pll_switcher)
+        if (parentContainer && parentContainer.parentNode) {
+            console.log('Removing Polylang parent container:', parentContainer);
+            parentContainer.parentNode.removeChild(parentContainer);
+        } else {
+            // Fallback: try to find and remove by selector
+            const polylangParentFallback = document.querySelector(
+                '.pll-parent-menu-item, [href="#pll_switcher"]');
+            if (polylangParentFallback) {
+                const parentLi = polylangParentFallback.closest('li');
+                if (parentLi && parentLi.parentNode) {
+                    console.log('Removing Polylang parent container (fallback):', parentLi);
+                    parentLi.parentNode.removeChild(parentLi);
+                }
+            }
+        }
+
+        // Add click handler to prevent default on dropdown trigger
+        const languageCurrent = dropdown.querySelector('.language-current');
+        if (languageCurrent) {
+            languageCurrent.addEventListener('click', function(e) {
+                e.preventDefault();
+                dropdown.classList.toggle('active');
+                console.log('Dropdown toggled, active:', dropdown.classList.contains('active'));
+            });
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        console.log('Language dropdown created successfully');
+    } else {
+        console.log('Not enough language items found to create dropdown');
+    }
+});
+</script>
+
+<style>
+/* Language dropdown styles */
+.menu-item-language-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.language-current {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none !important;
+    padding: 0.5rem 1rem;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+.language-current:hover {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+.dropdown-arrow {
+    margin-left: 8px;
+    font-size: 10px;
+    transition: transform 0.2s ease;
+    display: inline-block;
+    color: currentColor;
+}
+
+.menu-item-language-dropdown.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.language-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: translateY(-10px);
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    min-width: 160px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    transition: all 0.2s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item-language-dropdown.active .language-dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.menu-item-language-dropdown:hover .language-dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.language-dropdown-item {
+    margin: 0;
+    display: block;
+    width: 100%;
+}
+
+.language-dropdown-item a {
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.language-dropdown-item:first-child a {
+    border-radius: 6px 6px 0 0;
+}
+
+.language-dropdown-item:last-child a {
+    border-bottom: none;
+    border-radius: 0 0 6px 6px;
+}
+
+.language-dropdown-item a:hover {
+    background: #f8f9fa;
+    text-decoration: none;
+    color: #333;
+}
+
+.language-dropdown-item img {
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+/* Ensure flags display correctly */
+.language-current img,
+.language-dropdown-item img {
+    width: 16px;
+    height: 11px;
+    vertical-align: middle;
+    border-radius: 2px;
+}
+
+/* Match the theme's menu styling */
+#primary-menu .menu-item-language-dropdown a {
+    color: inherit;
+}
+
+/* Make sure it integrates well with the existing menu */
+.menu-item-language-dropdown {
+    margin: 0;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .language-dropdown-menu {
+        position: static;
+        display: flex !important;
+        flex-direction: column !important;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: none;
+        opacity: 1;
+        transform: none;
+        transition: none;
+        margin-top: 0.5rem;
+        border-radius: 4px;
+    }
+
+    .menu-item-language-dropdown.active .dropdown-arrow {
+        transform: rotate(0deg);
+    }
+
+    .language-dropdown-item {
+        display: block;
+        width: 100%;
+    }
+
+    .language-dropdown-item a {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: transparent;
+        color: inherit;
+        display: flex;
+        width: 100%;
+    }
+
+    .language-dropdown-item a:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: inherit;
+    }
+}
+
+/* Dark theme compatibility */
+@media (prefers-color-scheme: dark) {
+    .language-dropdown-menu {
+        background: #2d3748;
+        border-color: #4a5568;
+    }
+
+    .language-dropdown-item a {
+        color: #e2e8f0;
+        border-bottom-color: #4a5568;
+    }
+
+    .language-dropdown-item a:hover {
+        background: #4a5568;
+        color: #e2e8f0;
+    }
+}
+
+/* Ensure proper positioning relative to menu */
+@media (min-width: 769px) {
+    .language-dropdown-menu {
+        left: 0;
+        right: auto;
+        transform: translateY(-10px);
+        min-width: 180px;
+    }
+
+    .menu-item-language-dropdown.active .language-dropdown-menu,
+    .menu-item-language-dropdown:hover .language-dropdown-menu {
+        transform: translateY(0);
+    }
+
+    /* If dropdown is too close to right edge, position it to the left */
+    .menu-item-language-dropdown:last-child .language-dropdown-menu,
+    .menu-item-language-dropdown:nth-last-child(2) .language-dropdown-menu {
+        left: auto;
+        right: 0;
+    }
+}
+</style>
+<?php
+}
+add_action( 'wp_head', 'enqueue_language_switcher_script' );
