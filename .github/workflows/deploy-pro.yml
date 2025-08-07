@@ -41,7 +41,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22' # Versión LTS recomendada de Node.js
-          # cache: 'npm' # Habilita el caché para 'npm' para acelerar instalaciones futuras
+          cache: 'npm' # Habilita el caché para 'npm' para acelerar instalaciones futuras
 
       # 5. Instalar dependencias de NPM
       # Instala las 'devDependencies' como tailwindcss, postcss, etc.
